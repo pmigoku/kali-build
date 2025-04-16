@@ -1,3 +1,4 @@
+---
 - name: Update nmap scripts
   command: nmap --script-updatedb
 
@@ -6,3 +7,12 @@
 
 - name: Decompress rockyou.txt
   command: gzip -d /usr/share/wordlists/rockyou.txt.gz
+
+- name: fix scrolling in vmware
+  lineinfile:
+    path: ~/.zhrc
+    line: 'imwheel -b "4 5" > /dev/null 2>&1'
+    create: yes
+
+
+
