@@ -1,1 +1,21 @@
+---
+- name: IPTables: Allow related and established connections
+  ansible.builtin.iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
 
+- name: IPTables: Block INPUT 
+  ansible.builtin.iptables:
+    chain: INPUT
+    policy: DROP
+  become: yes
+
+- name: IPTables: Allow loopback
+  ansible.builtin.iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+    
+  
