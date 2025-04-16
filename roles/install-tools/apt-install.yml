@@ -1,7 +1,7 @@
 ---
 
 - name: "Upgrade all packages"
-  apt: upgrade=yes force_apt_get=yes
+  apt: upgrade=yes 
   become: true
   become_method: sudo
 
