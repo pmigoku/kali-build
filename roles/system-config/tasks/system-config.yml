@@ -1,11 +1,14 @@
 ---
 - name: Update nmap scripts
+  become: yes
   command: nmap --script-updatedb
 
 - name: Update database
+  become: yes
   command: updatedb
 
 - name: Decompress rockyou.txt
+  become: yes
   command: gzip -d /usr/share/wordlists/rockyou.txt.gz
 
 - name: fix scrolling in vmware
