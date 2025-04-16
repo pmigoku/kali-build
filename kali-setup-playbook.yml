@@ -2,6 +2,7 @@
 - name: "Kali Setup"
   hosts: localhost
   connection: local
+  become: true
   roles:
     - install-tools
     - configure-system
