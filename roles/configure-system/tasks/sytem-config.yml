@@ -1,0 +1,8 @@
+- name: Update nmap scripts
+  command: nmap --script-updatedb
+
+- name: Update database
+  command: updatedb
+
+- name: Decompress rockyou.txt
+  command: gzip -d /usr/share/wordlists/rockyou.txt.gz

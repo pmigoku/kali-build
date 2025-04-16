@@ -1,0 +1,7 @@
+---
+- name: "Kali Setup"
+  hosts: localhost
+  connection: local
+  roles:
+    - install-tools
+    
