@@ -1,0 +1,3 @@
+---
+- name: Configure window manager: Focus follows mouse
+  shell: xfconf-query -c xfwm4 -p /general/click_to_focus -T
