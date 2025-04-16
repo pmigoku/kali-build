@@ -4,5 +4,5 @@
   connection: local
   roles:
     - install-tools
-    - system-config
+    - configure-system
     
