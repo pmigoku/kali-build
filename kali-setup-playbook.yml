@@ -2,8 +2,7 @@
 - name: "Kali Setup Ansible Playbook"
   hosts: localhost
   connection: local
-  become: true
   roles:
     - install-tools
-    - configure-system
+    - system config
     
