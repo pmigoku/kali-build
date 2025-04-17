@@ -38,6 +38,7 @@
       - flameshot
       - ligolo-ng
       - sublime-text
+      - obsidian
     state: latest
   become: true
   become_method: sudo

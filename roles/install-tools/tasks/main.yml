@@ -1,2 +1,3 @@
 ---
 - include_tasks: apt-install.yml
+- include_tasks: github-tools.yml

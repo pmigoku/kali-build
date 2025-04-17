@@ -1,0 +1,29 @@
+---
+- name: Ensure labs/tools directory exists in user's home
+  ansible.builtin.file:
+    # Updated path to include 'labs'
+    path: "~/labs/tools" # Assumes labs/tools directory in the home dir
+    state: directory
+    mode: '0755'
+  become: false # Run as the user
+
+- name: Download LinEnum.sh script
+  ansible.builtin.get_url:
+    # Use the RAW URL for the script content
+    url: https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh
+    # Updated destination path and filename
+    dest: "~/labs/tools/LinEnum.sh"
+    # Set file permissions to make the script executable
+    mode: '0755'
+    # Optional: Set owner/group if needed, but usually defaults correctly with become: false
+    # owner: kali
+    # group: kali
+    # Optional: Set 'force: yes' if you always want to re-download/overwrite
+    # force: no
+  # Run as the user if downloading to their home directory
+  become: false
+  # Optional: Add tags for selective execution
+  tags:
+    - tools
+    - enumeration
+    - linenum
