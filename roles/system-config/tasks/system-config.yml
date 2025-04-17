@@ -7,6 +7,10 @@
   become: yes
   command: updatedb
 
+- name: Searchsploit Update
+  become: yes
+  command: searchsploit -u
+
 - name: Check if rockyou.txt.gz exists
   stat:
     path: /usr/share/wordlists/rockyou.txt.gz
