@@ -10,6 +10,6 @@
     -s true
     --create
     -t bool
-    become: false # Run as the graphical user
-    changed_when: false # xfconf-query doesn't give good stdout for change detection
+  become: false # Run as the graphical user
+  changed_when: false # xfconf-query doesn't give good stdout for change detection
 
