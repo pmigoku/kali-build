@@ -15,11 +15,10 @@
     state: present
   become: true
 
-- name: Add Microsoft GPG key
-  apt_key:
-    file: /tmp/microsoft.asc
-    state: present
-  become: true
+- name: Install the GPG key for VS Code
+  shell: |
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/vscode.gpg > /dev/null
+
 
 - name: Add VS Code repository
   apt_repository:
