@@ -1,0 +1,61 @@
+---
+# Assuming this is part of a larger playbook or role
+# Define these variables elsewhere (e.g., vars/main.yml, inventory, -e flag)
+# vars:
+#   git_user_name: "Your Actual Name"
+#   git_user_email: "your.actual.email@example.com"
+
+# tasks:
+
+    - name: Configure Git global user name
+      ansible.builtin.git_config:
+        # The configuration key to set (user.name)
+        name: user.name
+        # The scope for the configuration (global applies to ~/.gitconfig)
+        scope: global
+        # The value to set. Uses a variable, with a default fallback.
+        value: "{{ git_user_name | default('Default Kali User') }}"
+        # Ensure the configuration key is present
+        state: present
+      # IMPORTANT: Run as the user, not root
+      become: false
+      # Optional: Add tags for selective execution
+      tags:
+        - git
+        - config
+
+    - name: Configure Git global user email
+      ansible.builtin.git_config:
+        # The configuration key to set (user.email)
+        name: user.email
+        # The scope for the configuration (global applies to ~/.gitconfig)
+        scope: global
+        # The value to set. Uses a variable, with a default fallback.
+        value: "{{ git_user_email | default('kali@example.com') }}"
+        # Ensure the configuration key is present
+        state: present
+      # IMPORTANT: Run as the user, not root
+      become: false
+      # Optional: Add tags for selective execution
+      tags:
+        - git
+        - config
+
+# You might want to add other common Git configurations here, for example:
+# - name: Configure Git default push behavior (simple)
+#   ansible.builtin.git_config:
+#     name: push.default
+#     scope: global
+#     value: simple
+#     state: present
+#   become: false
+#   tags: [git, config]
+
+# - name: Configure Git default branch name (e.g., main)
+#   ansible.builtin.git_config:
+#     name: init.defaultBranch
+#     scope: global
+#     value: main
+#     state: present
+#   become: false
+#   tags: [git, config]

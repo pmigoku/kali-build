@@ -1,0 +1,68 @@
+---
+# Assuming this is part of a larger playbook or role
+# Example Play structure:
+# - hosts: your_kali_host_or_localhost
+#   gather_facts: true # Needed for ansible_user_id
+#   become: true       # Most tasks here require root privileges
+#   vars_prompt:
+#     - name: pmigoku_password
+#       prompt: "Enter password for new user 'pmigoku'"
+#       private: yes # Prevents echoing the password to the console
+#       encrypt: sha512_crypt # Optional: Specify hash method for password_hash filter (default is sha512)
+#       confirm: yes # Ask for password confirmation
+#       salt_size: 16 # Optional: Specify salt size for the hash
+
+#     - name: current_user_password
+#       prompt: "Enter NEW password for the current user ({{ ansible_user_id | default(lookup('env', 'USER')) }})"
+#       private: yes
+#       encrypt: sha512_crypt
+#       confirm: yes
+#       salt_size: 16
+
+#   tasks:
+    # ========================================================================
+    # == User Creation and Management                                      ==
+    # ========================================================================
+
+    - name: Ensure user 'pmigoku' exists
+      ansible.builtin.user:
+        name: pmigoku
+        state: present          # Ensure the user account exists
+        shell: /bin/bash        # Set default shell for the user
+        create_home: yes        # Create the home directory /home/pmigoku
+        # Optionally add to groups like 'sudo' here if needed:
+        # groups: sudo
+        # append: yes # Use append:yes if adding to groups
+      become: true # Requires root privileges
+
+    - name: Set password for user 'pmigoku'
+      ansible.builtin.user:
+        name: pmigoku
+        # Generate a hash from the prompted password.
+        # Requires python3-passlib on the target host (usually installed on Kali).
+        password: "{{ pmigoku_password | password_hash('sha512') }}"
+        update_password: always # Ensure password is set/updated
+      become: true # Requires root privileges
+      # Do not log the password hash itself in Ansible output
+      no_log: true
+
+    - name: Change password for the current user (running the playbook)
+      ansible.builtin.user:
+        # Uses the ansible_user_id fact (requires gather_facts: true)
+        # Provides fallback using environment variable if facts are off
+        name: "{{ ansible_user_id | default(lookup('env', 'USER')) }}"
+        # Generate hash for the current user's new password
+        password: "{{ current_user_password | password_hash('sha512') }}"
+        update_password: always # Ensure password is set/updated
+      become: true # Requires root privileges
+      # Do not log the password hash itself in Ansible output
+      no_log: true
+
+    # Example of adding user pmigoku to the sudo group (if desired)
+    # - name: Add user 'pmigoku' to the sudo group
+    #   ansible.builtin.user:
+    #     name: pmigoku
+    #     groups: sudo
+    #     append: yes # Important: Add to existing groups, don't replace
+    #     state: present
+    #   become: true

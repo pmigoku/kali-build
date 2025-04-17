@@ -1,0 +1,32 @@
+---
+# Assuming this is part of a larger playbook or role
+# - hosts: your_kali_host_or_localhost
+#   become: true # This task requires root privileges
+#   tasks:
+
+    - name: Allow members of group 'sudo' to execute any command without a password
+      ansible.builtin.copy:
+        # Define the content of the sudoers file snippet
+        content: |
+          # Allow members of the sudo group to execute any command without a password
+          # This setting should be used with caution.
+          %sudo ALL=(ALL:ALL) NOPASSWD: ALL
+        # Specify the destination file within the /etc/sudoers.d directory
+        # Filenames in sudoers.d must not contain '.' or end with '~'
+        dest: /etc/sudoers.d/99-sudo-nopasswd
+        # Set the owner and group to root
+        owner: root
+        group: root
+        # Set strict file permissions (read-only for owner) as required by sudo
+        mode: '0440'
+        # IMPORTANT: Validate the syntax of the file using 'visudo -cf' before deploying
+        # %s is replaced with the temporary file path by Ansible
+        validate: /usr/sbin/visudo -cf %s
+        # Ensure the file exists with the specified content
+        state: present
+      # This task requires root privileges to write to /etc/sudoers.d
+      become: true
+      # Optional: Add tags for selective execution
+      tags:
+        - sudo
+        - config
