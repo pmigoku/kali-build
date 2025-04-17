@@ -3,7 +3,7 @@
   become: yes
   command: nmap --script-updatedb
 
-- name: Update database
+- name: Update file database
   become: yes
   command: updatedb
 
@@ -27,5 +27,18 @@
     line: 'imwheel -b "4 5" > /dev/null 2>&1'
     create: yes
 
-
+- name: Create multiple directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: kali
+    group: kali
+  loop:
+    - /home/kali/labs
+    - /home/kali/labs/tools
+    - /home/kali/labs/scripts
+    - /home/kali/labs/boxes
+    - /home/kali/labs/boxes/offsec
+    - /home/kali/labs/boxes/htb
 

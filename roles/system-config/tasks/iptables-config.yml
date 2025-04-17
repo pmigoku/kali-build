@@ -18,5 +18,21 @@
     in_interface: lo
     jump: ACCEPT
   become: yes
-    
+  
+- name: IPTables - Log packets before dropping via INPUT policy
+  ansible.builtin.iptables:
+    chain: INPUT
+    # Use the LOG target to send packet info to kernel log
+    jump: LOG
+    # Add a prefix to easily identify these log messages (check /var/log/syslog or kern.log)
+    log_prefix: "IPTables-Input-Dropped: "
+    # Optional: Limit logging rate to prevent log flooding under scan/attack
+    # Example: Log max 3 packets per minute after an initial burst of 5
+    # limit: 3/minute
+    # limit_burst: 5
+    # Add this rule to the end of the INPUT chain
+    action: append
+    state: present
+    comment: "Log packets destined for default DROP policy"
+  become: yes # Requires root privileges
   
