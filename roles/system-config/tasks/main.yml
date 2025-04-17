@@ -4,3 +4,4 @@
 - include_tasks: "xfce-config.yml"
 - include_tasks: "iptables-config.yml"
 - include_tasks: "vimrc.yml"
+- include_tasks: "git-config.yml"
