@@ -1,0 +1,36 @@
+- name: Create .vimrc file
+  hosts: localhost 
+  tasks:
+    - name: Create .vimrc
+      ansible.builtin.copy:
+        dest: /home/{{ ansible_user_id }}/.vimrc 
+        content: |
+          set nocompatible
+          filetype on
+          filetype plugin on
+          filetype indent on
+          syntax on
+          set cursorline
+          set cursorcolumn
+          set shiftwidth=4
+          set tabstop=4
+          set expandtab
+          set nobackup
+          set scrolloff=10
+          set nowrap
+          set incsearch
+          set ignorecase
+          set smartcase
+          set showcmd
+          set showmode
+          set showmatch
+          set hlsearch
+          set history=1000
+          set foldmethod=marker
+          nnoremap \ za
+          :nnoremap <F5> "=strftime("%%Y-%%m-%%d-%%H:%%M:%%S")<CR>PA--<space>
+          :inoremap <F5> <C-R>=strftime("%%Y-%%m-%d-%H:%M:%S")<CR>--<space>
+          syn match timestamp '^2024-.*.-- '
+          hi timestamp ctermfg=black ctermbg=yellow
+          syn match comment '^#.*'
+          hi comment ctermfg=green ctermbg=black
