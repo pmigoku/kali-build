@@ -1,3 +1,15 @@
 ---
 - name: Configure window manager - Focus follows mouse
   shell: xfconf-query -c xfwm4 -p /general/click_to_focus -T
+
+- name: Enable XFCE presentation mode to prevent sleep/locking
+      ansible.builtin.command: >
+        xfconf-query
+        -c xfce4-power-manager
+        -p /xfce4-power-manager/presentation-mode
+        -s true
+        --create
+        -t bool
+      become: false # Run as the graphical user
+      changed_when: false # xfconf-query doesn't give good stdout for change detection
+
