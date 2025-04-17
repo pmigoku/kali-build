@@ -31,7 +31,7 @@
       - mingw-w64
       - python3-wsgidav
       - chisel
-      - bloodhoung
+      - bloodhound
       - gitleaks
       - feroxbuster
       - flameshot
