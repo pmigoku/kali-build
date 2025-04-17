@@ -2,11 +2,11 @@
   ansible.builtin.copy:
         # Specifies the destination file in the target user's home directory.
         # Ansible typically resolves '~' correctly for the remote user.
-  dest: "~/.vimrc"
+    dest: "~/.vimrc"
 
         # The 'content' parameter allows defining the file contents directly.
         # The '|' signifies a literal block scalar in YAML, preserving newlines exactly.
-  content: |
+    content: |
           " Disable compatibility with vi which can cause unexpected issues.
           set nocompatible
 
@@ -93,16 +93,16 @@
 
         # Explicitly set the owner to the user running the task.
         # Requires Ansible facts (gather_facts: true) or a fallback like lookup('env', 'USER').
-  owner: "{{ ansible_user_id | default(lookup('env', 'USER')) }}"
+    owner: "{{ ansible_user_id | default(lookup('env', 'USER')) }}"
 
         # Explicitly set the group, often the same as the user ID for primary group.
-  group: "{{ ansible_user_id | default(lookup('env', 'USER')) }}"
+    group: "{{ ansible_user_id | default(lookup('env', 'USER')) }}"
 
         # Set standard file permissions (read/write for owner, read for group/others).
-  mode: '0644'
+    mode: '0644'
 
         # Prevent Ansible from creating backup files of the previous .vimrc.
-  backup: no
+    backup: no
 
       # IMPORTANT: This task must run as the user whose .vimrc is being created.
   become: false
