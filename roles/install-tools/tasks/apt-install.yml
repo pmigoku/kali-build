@@ -15,17 +15,6 @@
     state: present
   become: true
 
-- name: Install the GPG key for VS Code
-  shell: |
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/vscode.gpg > /dev/null
-
-
-- name: Add VS Code repository
-  apt_repository:
-    repo: deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main
-    state: present
-  become: true  
-
 - name: Update apt cache
   apt:
     update_cache: yes
@@ -48,7 +37,6 @@
       - flameshot
       - ligolo-ng
       - sublime-text
-      - code
     state: latest
   become: true
   become_method: sudo
