@@ -85,7 +85,7 @@
 
           " Highlighting: Custom rules for timestamps and comments
           " Note: Timestamp rule currently matches only starting with 2024
-          syn match timestamp '^2024-.*.-- '
+          syn match timestamp '^2025-.*.-- '
           hi timestamp ctermfg=black ctermbg=yellow
 
           syn match comment '^#.*'
