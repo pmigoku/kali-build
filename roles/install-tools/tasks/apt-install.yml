@@ -39,6 +39,7 @@
       - ligolo-ng
       - sublime-text
       - obsidian
+      - asciinema
     state: latest
   become: true
   become_method: sudo
