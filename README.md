@@ -17,7 +17,7 @@ git clone https://github.com/ch3go/kali-build.git
 
 run playbook 
 ```bash
-ansible-playbook kali_setup.yml -K
+ansible-playbook kali-setup-playbook.yml -K
 ```
 
 
