@@ -19,7 +19,7 @@
 
 - name: fix scrolling in vmware
   lineinfile:
-    path: ~/.zhrc
+    path: ~/.zshrc
     line: 'imwheel -b "4 5" > /dev/null 2>&1'
     create: yes
 
